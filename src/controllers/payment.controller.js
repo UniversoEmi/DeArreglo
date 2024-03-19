@@ -1,11 +1,20 @@
-import mercadopago from 'mercadopago';
+import mercadopage from "mercadopago";
+import { MERCADOPAGO_API_KEY } from "../config.js";
 
-// Configurar el token de acceso de MercadoPago
-mercadopago.configurations.setAccessToken('TEST-1803343693495513-031302-c1900d6daa9003f2b3c54e32a6c102c5-1726167154');
+export const createOrder = async (req, res) => {
+  mercadopage.configure({
+    access_token: "TEST-1803343693495513-031302-c1900d6daa9003f2b3c54e32a6c102c5-1726167154",
+  });
 
-export const createOrder = (req, res) => {
-    // Aquí puedes realizar otras operaciones relacionadas con la creación de la orden
-    
-    // Por ejemplo, enviar un mensaje de éxito
-    res.status(200).json({ message: 'Orden creada exitosamente' });
+  mercadopage.preferences.create({
+    items: [
+        {
+            title: "laptop",
+            unit_price: 12000,
+            currency_id: "ARS",
+            quantity: 1,
+        }
+    ]
+  })
+  res.send("creando orden")
 };
